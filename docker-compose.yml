@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  auth-service:
+    build: .
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/AuthDatabase
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: Test@12345
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: AuthDatabase
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Test@12345
+    ports:
+      - "5433:5432"
